@@ -2,30 +2,40 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SmartLess Mobile</title>
 
-  <!-- Load CXone SDK (important: DO NOT defer this) -->
+  <!-- Load CXone SDK (do not defer) -->
   <script src="https://smartless.cxengage.net/jsapi/sdk.js"></script>
 
-  <!-- Optional: include Figtree font if you're using it -->
+  <!-- Figtree font -->
   <link href="https://fonts.googleapis.com/css2?family=Figtree&display=swap" rel="stylesheet">
-  
+
   <style>
     body {
-      font-family: "Figtree", sans-serif;
+      margin: 0;
+      padding: 0;
+      font-family: "Figtree", Arial, sans-serif;
+      background-color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: #000;
+    }
+
+    h1 {
+      font-size: 3rem;
     }
   </style>
 </head>
 <body>
-
-  <!-- Optional visible content or logo for debugging -->
   <h1>SmartLess Mobile</h1>
 
   <script>
-    // Wait until cxone SDK is defined before initializing
     function initCxOne() {
       if (typeof cxone !== 'function') {
-        setTimeout(initCxOne, 100); // Wait until loaded
+        setTimeout(initCxOne, 100);
         return;
       }
 
@@ -60,7 +70,7 @@
         window.addEventListener(eventType, handleEvent);
       });
 
-      function handleEvent(event) {
+      function handleEvent() {
         observePrecontactSurvey();
         applyClickEventinAvatar();
       }
@@ -73,30 +83,3 @@
           mutations.forEach((mutation) => {
             mutation.addedNodes.forEach((node) => {
               if (
-                node.matches &&
-                node.matches('[data-selector="GUIDE_MENU_BUTTON"]')
-              ) {
-                applyClickEventinAvatar();
-              }
-            });
-          });
-        });
-
-        observer.observe(container, {
-          childList: true,
-          subtree: true,
-        });
-      }
-
-      function applyClickEventinAvatar() {
-        const continueChatButton = document.querySelector('[title="Continue chat"]');
-        if (continueChatButton) {
-          continueChatButton.style.cursor = "pointer";
-        }
-      }
-    }
-
-    window.addEventListener("load", initCxOne);
-  </script>
-</body>
-</html>
