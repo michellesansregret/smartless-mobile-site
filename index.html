@@ -16,7 +16,6 @@
       height: 100vh;
       color: #000;
     }
-
     h1 {
       font-size: 3rem;
     }
@@ -24,5 +23,42 @@
 </head>
 <body>
   <h1>SmartLess Mobile</h1>
+
+  <!-- Load CXone widget/library script here if needed -->
+  <!-- Example (replace with actual CXone widget URL if you have one): -->
+  <!-- <script src="https://example.com/cxone-widget.js"></script> -->
+
+  <script>
+    // Make sure cxone is loaded before you run these commands
+
+    // Initialize the guide (without the hardcoded ID as you requested)
+    cxone("guide", "init");
+
+    // Apply custom CSS for guide widget and chat
+    cxone("guide", "setCustomCss", `
+      [data-selector="GUIDE_MENU_BUTTON"] {
+        -webkit-box-shadow: 0 5px 11px 0 rgba(0, 0, 0, .2) !important;
+        box-shadow: 0 5px 11px 0 rgba(0, 0, 0, .2) !important;
+        width: 74px !important;
+        height: 74px !important;
+        border-radius: .5em !important;
+      }
+      /* your other CSS here ... */
+    `);
+
+    cxone("chat", "setCustomCss", `
+      * {
+        font-family: "Figtree" !important;
+      }
+      /* your other chat CSS here ... */
+    `);
+
+    cxone("guide", "setOffsetX", "78");
+    cxone("guide", "setOffsetY", "150");
+    cxone("chat", "sendFirstMessageAutomatically", "begin_conversation");
+    cxone("chat", "autoStartSession");
+    cxone("chat", "setCustomerName", "Customer Name");
+  </script>
+
 </body>
 </html>
