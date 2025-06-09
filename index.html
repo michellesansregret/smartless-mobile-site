@@ -2,45 +2,86 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SmartLess Mobile</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-      background-color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      color: #000;
-    }
 
-    h1 {
-      font-size: 3rem;
-    }
-  </style>
+  <!-- Load the CXone SDK -->
+  <script src="https://smartless.cxengage.net/jsapi/sdk.js" defer></script>
 </head>
 <body>
-  <h1>SmartLess Mobile</h1>
+  <!-- Your site content -->
 
   <script>
-    (function(n, u) {
-      window.CXoneDfo = n,
-      window[n] = window[n] || function() {
-        (window[n].q = window[n].q || []).push(arguments)
-      },
-      window[n].u = u;
+    window.onload = function () {
+      cxone("guide", "init");
 
-      const e = document.createElement("script");
-      e.type = "module";
-      e.src = u + "?" + Math.round(Date.now() / 3600000); // 1-hour cache busting
-      document.head.appendChild(e);
-    })('cxone', 'https://web-modules-de-na1.niceincontact.com/loader/1/loader.js');
+      cxone("guide", "setCustomCss", `
+        [data-selector="GUIDE_MENU_BUTTON"] {
+          width: 74px !important;
+          height: 74px !important;
+          -webkit-box-shadow: 0 5px 11px 0 rgba(0, 0, 0, .2) !important;
+          box-shadow: 0 5px 11px 0 rgba(0, 0, 0, .2) !important;
+        }
+        /* (add the rest of your custom CSS here as a single string) */
+      `);
 
-    cxone('init', '5178'); // Your widget ID
-    cxone('guide', 'init');
+      cxone("chat", "setCustomCss", `
+        * {
+          font-family: "Figtree" !important;
+        }
+        [data-selector="CUSTOMER_MESSAGE_BUBBLE"] {
+          background-color: #008db3 !important;
+          color: #ffffff !important;
+        }
+        /* (add remaining chat CSS here) */
+      `);
+
+      cxone("guide", "setOffsetX", "78");
+      cxone("guide", "setOffsetY", "150");
+
+      cxone("chat", "sendFirstMessageAutomatically", "begin_conversation");
+      cxone("chat", "autoStartSession");
+      cxone("chat", "setCustomerName", "Customer Name");
+
+      const guideEvents = ["templateDisplayed", "entrypointOpened"];
+      function handleEvent(event) {
+        observePrecontactSurvey();
+        applyClickEventinAvatar();
+      }
+
+      guideEvents.forEach((eventType) => {
+        window.addEventListener(eventType, handleEvent);
+      });
+
+      function observePrecontactSurvey() {
+        const container = document.getElementById("cxone-guide-container");
+        if (!container) return;
+
+        const observer = new MutationObserver((mutations) => {
+          mutations.forEach((mutation) => {
+            mutation.addedNodes.forEach((node) => {
+              if (
+                node.matches &&
+                node.matches('[data-selector="GUIDE_MENU_BUTTON"]')
+              ) {
+                applyClickEventinAvatar();
+              }
+            });
+          });
+        });
+
+        observer.observe(container, {
+          childList: true,
+          subtree: true,
+        });
+      }
+
+      function applyClickEventinAvatar() {
+        const continueChatButton = document.querySelector('[title="Continue chat"]');
+        if (continueChatButton) {
+          continueChatButton.style.cursor = "pointer";
+        }
+      }
+    };
   </script>
 </body>
 </html>
