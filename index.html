@@ -8,7 +8,7 @@
   <!-- Load CXone SDK (do not defer) -->
   <script src="https://smartless.cxengage.net/jsapi/sdk.js"></script>
 
-  <!-- Figtree font -->
+  <!-- Optional: Google Font -->
   <link href="https://fonts.googleapis.com/css2?family=Figtree&display=swap" rel="stylesheet">
 
   <style>
@@ -51,35 +51,9 @@
 
       cxone("chat", "setCustomCss", `
         * {
-          font-family: "Figtree" !important;
+          font-family: "Figtree", Arial, sans-serif !important;
         }
         [data-selector="CUSTOMER_MESSAGE_BUBBLE"] {
           background-color: #008db3 !important;
           color: #ffffff !important;
         }
-      `);
-
-      cxone("guide", "setOffsetX", "78");
-      cxone("guide", "setOffsetY", "150");
-      cxone("chat", "sendFirstMessageAutomatically", "begin_conversation");
-      cxone("chat", "autoStartSession");
-      cxone("chat", "setCustomerName", "Customer Name");
-
-      const guideEvents = ["templateDisplayed", "entrypointOpened"];
-      guideEvents.forEach((eventType) => {
-        window.addEventListener(eventType, handleEvent);
-      });
-
-      function handleEvent() {
-        observePrecontactSurvey();
-        applyClickEventinAvatar();
-      }
-
-      function observePrecontactSurvey() {
-        const container = document.getElementById("cxone-guide-container");
-        if (!container) return;
-
-        const observer = new MutationObserver((mutations) => {
-          mutations.forEach((mutation) => {
-            mutation.addedNodes.forEach((node) => {
-              if (
