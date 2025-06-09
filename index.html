@@ -4,18 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>SmartLess Mobile</title>
-
-  <!-- Load CXone SDK (do not defer) -->
-  <script src="https://smartless.cxengage.net/jsapi/sdk.js"></script>
-
-  <!-- Optional: Google Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Figtree&display=swap" rel="stylesheet">
-
   <style>
     body {
       margin: 0;
       padding: 0;
-      font-family: "Figtree", Arial, sans-serif;
+      font-family: Arial, sans-serif;
       background-color: white;
       display: flex;
       justify-content: center;
@@ -31,29 +24,5 @@
 </head>
 <body>
   <h1>SmartLess Mobile</h1>
-
-  <script>
-    function initCxOne() {
-      if (typeof cxone !== 'function') {
-        setTimeout(initCxOne, 100);
-        return;
-      }
-
-      cxone("guide", "init");
-
-      cxone("guide", "setCustomCss", `
-        [data-selector="GUIDE_MENU_BUTTON"] {
-          width: 74px !important;
-          height: 74px !important;
-          box-shadow: 0 5px 11px 0 rgba(0, 0, 0, .2) !important;
-        }
-      `);
-
-      cxone("chat", "setCustomCss", `
-        * {
-          font-family: "Figtree", Arial, sans-serif !important;
-        }
-        [data-selector="CUSTOMER_MESSAGE_BUBBLE"] {
-          background-color: #008db3 !important;
-          color: #ffffff !important;
-        }
+</body>
+</html>
